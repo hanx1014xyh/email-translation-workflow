@@ -212,7 +212,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "han.x.1014@gmail.com",
+        "fromEmail": "YOUR_EMAIL@gmail.com",
         "toEmail": "={{ $('Webhook').item.json.body.to }}",
         "subject": "={{ $('Webhook').item.json.body.subject }}",
         "emailFormat": "text",
