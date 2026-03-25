@@ -68,7 +68,7 @@ Webhook (接收中文回复) → 中文转英文 (DeepSeek LLM) → Send Email (
 
 ### 部署步骤
 
-1. 在 n8n 中导入 `workflow.json`
+1. 在 n8n 中导入 `Email Translation Workflow.json`
 2. 配置 IMAP credential（Gmail 邮箱 + 应用专用密码）
 3. 配置 SMTP credential（Gmail 邮箱 + 应用专用密码）
 4. 配置 DeepSeek API Key（Header Auth: `Authorization: Bearer {YOUR_KEY}`）
