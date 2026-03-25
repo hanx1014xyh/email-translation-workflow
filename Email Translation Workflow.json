@@ -11,7 +11,7 @@
         0,
         0
       ],
-      "id": "71669afc-02f4-446a-af8a-012514a1d6a4",
+      "id": "5297f303-d293-4095-92bc-43ba7f200e81",
       "name": "Email Trigger (IMAP)",
       "credentials": {
         "imap": {
@@ -94,7 +94,9 @@
             }
           ]
         },
-        "options": {}
+        "options": {
+          "fallbackOutput": "extra"
+        }
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
@@ -102,7 +104,7 @@
         416,
         -16
       ],
-      "id": "2912b612-b0db-4f9d-9e6b-852e5f019fd7",
+      "id": "62223bde-bfa5-4b87-867c-e5dba58c8794",
       "name": "Switch"
     },
     {
@@ -111,7 +113,7 @@
         "url": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_WECOM_KEY",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"msgtype\": \"text\",\n  \"text\": {\n    \"content\": \"{{ $json.choices[0].message.content }}\"\n  }\n}\n",
+        "jsonBody": "={\n  \"msgtype\": \"text\",\n  \"text\": {\n    \"content\": \"📩 新邮件通知\\n发件人：{{ $('Email Trigger (IMAP)').item.json.from }}\\n主题：{{ $('Email Trigger (IMAP)').item.json.subject }}\\n正文：{{ $json.choices[0].message.content }}\"\n  }\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -120,7 +122,7 @@
         624,
         -144
       ],
-      "id": "1a74d320-f8e5-4878-9985-65dca1da905f",
+      "id": "d1c5e86c-c31c-43b6-8e7b-a5b4be9517ed",
       "name": "企微通知"
     },
     {
@@ -129,7 +131,7 @@
         "url": "https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_FEISHU_TOKEN",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"msg_type\": \"text\",\n  \"content\": {\n    \"text\": \"{{ $json.choices[0].message.content }}\"\n  }\n}\n",
+        "jsonBody": "={\n  \"msg_type\": \"text\",\n  \"content\": {\n    \"text\": \"📩 新邮件通知\\n发件人：{{ $('Email Trigger (IMAP)').item.json.from }}\\n主题：{{ $('Email Trigger (IMAP)').item.json.subject }}\\n正文：{{ $json.choices[0].message.content }}\"\n  }\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -138,7 +140,7 @@
         624,
         0
       ],
-      "id": "b0933c5b-2dc0-46e2-a127-2e98d2f6cf60",
+      "id": "4972261d-894b-4c98-8ed0-89e09439f4fe",
       "name": "飞书通知"
     },
     {
@@ -147,7 +149,7 @@
         "url": "https://oapi.dingtalk.com/robot/send?access_token=YOUR_DINGTALK_TOKEN",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"msgtype\": \"text\",\n  \"text\": {\n    \"content\": \"{{ $json.choices[0].message.content }}\"\n  }\n}\n",
+        "jsonBody": "={\n  \"msgtype\": \"text\",\n  \"text\": {\n    \"content\": \"📩 新邮件通知\\n发件人：{{ $('Email Trigger (IMAP)').item.json.from }}\\n主题：{{ $('Email Trigger (IMAP)').item.json.subject }}\\n正文：{{ $json.choices[0].message.content }}\"\n  }\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -156,13 +158,13 @@
         624,
         144
       ],
-      "id": "4c678fa5-bfcd-49f7-a9f2-14e59b120ff9",
+      "id": "d5114378-2b26-4f22-b5dc-dc35b75e8151",
       "name": "钉钉通知"
     },
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "reply",
+        "path": "dacef6cc-ae97-496b-a660-930302583779",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
@@ -171,9 +173,9 @@
         0,
         320
       ],
-      "id": "6e8ea7f7-1cf1-4870-9615-785a2f007398",
+      "id": "577c33ca-ca0c-4991-9f08-4da9d7b44d14",
       "name": "Webhook",
-      "webhookId": "2b9996a4-3341-4c8f-b11a-893640218de4"
+      "webhookId": "dacef6cc-ae97-496b-a660-930302583779"
     },
     {
       "parameters": {
@@ -201,7 +203,7 @@
         208,
         320
       ],
-      "id": "e208990f-eb84-4cd4-accd-389b66a4d48a",
+      "id": "2f077d01-bbc1-424c-9ab4-c6d0afda779d",
       "name": "中文转英文",
       "credentials": {
         "httpHeaderAuth": {
@@ -212,7 +214,7 @@
     },
     {
       "parameters": {
-        "fromEmail": "YOUR_EMAIL@gmail.com",
+        "fromEmail": "han.x.1014@gmail.com",
         "toEmail": "={{ $('Webhook').item.json.body.to }}",
         "subject": "={{ $('Webhook').item.json.body.subject }}",
         "emailFormat": "text",
@@ -225,9 +227,9 @@
         416,
         320
       ],
-      "id": "0268d509-2af1-4654-adc0-df471d25643c",
+      "id": "d3bcf4b6-14c8-4f28-857a-0ded7371673c",
       "name": "Send an Email",
-      "webhookId": "8aed3e64-a7cd-472b-ba1d-0908556a6414",
+      "webhookId": "7c9db1dd-eb6d-4d04-bcd6-ce4aa194fcfd",
       "credentials": {
         "smtp": {
           "id": "flEU3wR8DSDLcywc",
@@ -261,7 +263,7 @@
         208,
         0
       ],
-      "id": "67e859b5-a9d8-4a22-9552-f84287fbae47",
+      "id": "08a8ea9f-e8f2-4a29-ab2b-1ea456476e8b",
       "name": "英文转中文",
       "credentials": {
         "httpHeaderAuth": {
@@ -306,6 +308,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "企微通知",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -346,13 +355,14 @@
   "active": false,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate"
+    "binaryMode": "separate",
+    "availableInMCP": false
   },
-  "versionId": "172311eb-e168-47b4-944b-7c42e87309a6",
+  "versionId": "0f3fc4f3-cc36-4f8f-8df8-10030e496455",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "f14a930a8b450591dc00b5da0707fe7b70543d4bbdb796668c4d2de8863d3adc"
   },
-  "id": "9OLW1Q71XtGNwKqT",
+  "id": "wnCv5VZYp1FJGaiC",
   "tags": []
 }
